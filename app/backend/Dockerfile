@@ -8,6 +8,10 @@ RUN npm install
 
 COPY . .
 
-CMD ["npm", "start"]
+# Desenvolvimento
+CMD ["npm", "run", "dev"] 
+
+#Production
+# CMD ["npm", "start"]
 
 EXPOSE 3001
