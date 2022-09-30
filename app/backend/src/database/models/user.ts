@@ -3,12 +3,12 @@ import db from '.';
 // import OtherModel from './OtherModel';
 
 class User extends Model {
-  id!: number;
-  userName!: string;
-  rule!: string;
-  email!: string;
-  createdAt!: Date;
-  updatedAt!: Date;
+  id?: number;
+  userName: string;
+  rule: string;
+  email: string;
+  createdAt: Date;
+  updatedAt: Date;
 }
 
 User.init({
@@ -43,7 +43,7 @@ User.init({
   // ... Outras configs
   underscored: true,
   sequelize: db,
-  // modelName: 'example',
+  modelName: 'users',
   timestamps: false,
 });
 
