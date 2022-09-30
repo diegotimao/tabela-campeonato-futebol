@@ -9,6 +9,7 @@ module.exports = {
       userName: {
         allowNull: false,
         type: Sequelize.STRING,
+        field: 'user_name',
       },
       rule: {
         allowNull: false,
