@@ -7,8 +7,7 @@ class User extends Model {
   userName: string;
   rule: string;
   email: string;
-  createdAt: Date;
-  updatedAt: Date;
+  password: string;
 }
 
 User.init({
@@ -31,13 +30,9 @@ User.init({
     type: STRING,
     allowNull: false,
   },
-  createdAt: {
-    type: DATE,
+  password: {
     allowNull: false,
-  },
-  updatedAt: {
-    type: DATE,
-    allowNull: false,
+    type: STRING,
   },
 }, {
   // ... Outras configs
