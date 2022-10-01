@@ -1,4 +1,4 @@
-import { DATE, Model, BOOLEAN, INTEGER } from 'sequelize';
+import { Model, BOOLEAN, INTEGER } from 'sequelize';
 import db from '.';
 
 class Matches extends Model {
@@ -37,16 +37,6 @@ Matches.init({
   inProgress: {
     allowNull: false,
     type: BOOLEAN,
-  },
-  createdAt: {
-    allowNull: false,
-    type: DATE,
-    field: 'created_at',
-  },
-  updatedAt: {
-    allowNull: false,
-    type: DATE,
-    field: 'updated_at',
   },
 }, {
   underscored: true,
