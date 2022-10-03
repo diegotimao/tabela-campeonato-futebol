@@ -1,4 +1,8 @@
 import * as express from 'express';
+import UserController from './controller/userController';
+import errorMiddleware from './middleware/error.middleware';
+
+require('express-async-errors');
 
 class App {
   public app: express.Express;
@@ -7,7 +11,6 @@ class App {
     this.app = express();
 
     this.config();
-
     // Não remover essa rota
     this.app.get('/', (req, res) => res.json({ ok: true }));
   }
@@ -19,9 +22,12 @@ class App {
       res.header('Access-Control-Allow-Headers', '*');
       next();
     };
-
     this.app.use(express.json());
     this.app.use(accessControl);
+
+    this.app.post('/login', (req, res) => UserController.login(req, res));
+
+    this.app.use(errorMiddleware);
   }
 
   public start(PORT: string | number):void {
