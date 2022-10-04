@@ -15,4 +15,13 @@ describe('Testando o metodo POST', async () => {
     });
     expect(result).to.have.status(400);
   });
+
+
+  it('Deve retornar o status 400, se a senha não for passada.', async () => {
+    const result = await chai.request(app).post('/login').send({
+      email: 'admin@admin.com',
+      password: '',
+    });
+    expect(result).to.have.status(400);
+  });
 });
