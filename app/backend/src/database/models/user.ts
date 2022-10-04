@@ -18,11 +18,11 @@ User.init({
     primaryKey: true,
     autoIncrement: true,
   },
-  userName: {
+  username: {
     type: STRING,
     allowNull: false,
   },
-  rule: {
+  role: {
     type: STRING,
     allowNull: false,
   },
