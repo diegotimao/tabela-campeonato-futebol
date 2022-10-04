@@ -3,7 +3,9 @@ import { SignOptions } from 'jsonwebtoken';
 import IHeader from '../dto/headerDto';
 import Exeption from './exeption';
 
-const SECRET = 'diego';
+const SECRET = 'jwt_secret';
+
+// const SECRET  = process.env.JWT_SECRET;
 
 const jwtDefaultConfig: SignOptions = {
   expiresIn: '2d',
