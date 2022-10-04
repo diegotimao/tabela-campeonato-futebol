@@ -6,10 +6,9 @@ module.exports = {
         autoIncrement: true,
         type: Sequelize.INTEGER,
       },
-      userName: {
+      username: {
         allowNull: false,
         type: Sequelize.STRING,
-        field: 'username',
       },
       role: {
         allowNull: false,
