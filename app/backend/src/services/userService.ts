@@ -10,7 +10,6 @@ export default class UserService {
     if (!loginDTO.email || !loginDTO.password) throw new Exeption(400, 'All fields must be filled');
 
     const user = await User.findOne({
-      attributes: ['email', 'password'],
       where: { email: loginDTO.email },
     });
 
