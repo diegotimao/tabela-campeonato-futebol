@@ -1,10 +1,18 @@
 import * as chai from 'chai';
-import chaiHttp from 'chai-http';
+// @ts-ignore
+import chaiHttp = require('chai-http'); 
+import { app } from '../app';
 
 chai.use(chaiHttp);
 
-describe('Testando a rota login', () => {
-  describe('Testando o metodo POST', async () => {
-    const response = await chai.request();
-  })
+const { expect } = chai;
+
+describe('Testando o metodo POST', async () => {
+  it('Deve retornar o status 400, se o email não for passada.', async () => {
+    const result = await chai.request(app).post('/login').send({
+      email: '',
+      password: '123123',
+    });
+    expect(result).to.have.status(400);
+  });
 });
