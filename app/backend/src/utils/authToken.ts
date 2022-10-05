@@ -17,11 +17,11 @@ export default class AuthToken {
     }
   }
 
-  public async gerarToken(payload: IHeader) {
+  async gerarToken(payload: IHeader) {
     return Jwt.sign(payload, SECRET, this.jwtConfig);
   }
 
-  public async autenticateToken(token: string) {
+  async autenticateToken(token: string) {
     try {
       const autorization: Jwt.JwtPayload = Jwt.verify(
         token,
@@ -31,7 +31,7 @@ export default class AuthToken {
       ) as Jwt.JwtPayload;
       return autorization.role;
     } catch (error) {
-      throw new Exeption(401, 'Token invalid');
+      throw new Exeption(400, 'Token invalid');
     }
   }
 }
