@@ -2,8 +2,6 @@ import * as express from 'express';
 import UserController from './controller/userController';
 import errorMiddleware from './middleware/error.middleware';
 
-require('express-async-errors');
-
 class App {
   public app: express.Express;
 
@@ -25,7 +23,8 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
 
-    this.app.post('/login', (req, res) => UserController.login(req, res));
+    this.app.post('/login', (req, res, next) => UserController.login(req, res, next));
+    this.app.get('/login/validate', (req, res, next) => UserController.validate(req, res, next));
 
     this.app.use(errorMiddleware);
   }
