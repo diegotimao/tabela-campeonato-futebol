@@ -13,4 +13,9 @@ describe('Testando as funcionalidades das rotas de Teams GET', () => {
     const result = await chai.request(app).get('/teams');
     expect(result).to.have.status(200);
   });
+
+  it('Ao Acessar a /teams/:id deve retornar o status 200', async () => {
+    const result = await chai.request(app).get('/teams/4');
+    expect(result).to.have.status(200);
+  });
 })
