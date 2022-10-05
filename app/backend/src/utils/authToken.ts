@@ -3,9 +3,7 @@ import { SignOptions } from 'jsonwebtoken';
 import IHeader from '../dto/headerDto';
 import Exeption from './exeption';
 
-const SECRET = 'jwt_secret';
-
-// const SECRET  = process.env.JWT_SECRET;
+const SECRET = process.env.JWT_SECRET || 'jwt_secret';
 
 const jwtDefaultConfig: SignOptions = {
   expiresIn: '2d',
@@ -19,18 +17,19 @@ export default class AuthToken {
     }
   }
 
-  public gerarToken(payload: IHeader) {
+  public async gerarToken(payload: IHeader) {
     return Jwt.sign(payload, SECRET, this.jwtConfig);
   }
 
   public async autenticateToken(token: string) {
-    if (!token) {
-      throw new Exeption(401, 'Token notfound.');
-    }
-
     try {
-      const autorization = Jwt.verify(token, SECRET, this.jwtConfig);
-      return autorization;
+      const autorization: Jwt.JwtPayload = Jwt.verify(
+        token,
+        SECRET,
+
+        this.jwtConfig,
+      ) as Jwt.JwtPayload;
+      return autorization.role;
     } catch (error) {
       throw new Exeption(401, 'Token invalid');
     }
