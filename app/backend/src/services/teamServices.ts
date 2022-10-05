@@ -2,18 +2,18 @@ import Exeption from '../utils/exeption';
 import Teams from '../database/models/teams';
 
 export default class TeamService {
-  public static async getAll() {
-    const teamsAll = await Teams.findAll();
+  constructor(private teamsModel: typeof Teams) {}
 
+  async getAll() {
+    const teamsAll = await this.teamsModel.findAll();
     if (teamsAll.length <= 0) throw new Exeption(400, 'Notfound');
-
     return teamsAll;
   }
 
-  public static async getOne(id: number) {
-    const oneTeam = await Teams.findOne({
-      where: { id },
-    });
+  async getOne(id: number) {
+    const oneTeam = await this.teamsModel.findByPk(id);
+
+    if (!oneTeam) throw new Exeption(400, 'Notfound');
 
     return oneTeam;
   }
