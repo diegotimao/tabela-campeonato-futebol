@@ -28,7 +28,14 @@ export default class UserService {
     if (!isHasch) throw new Exeption(401, 'Incorrect email or password');
 
     const tokenCreate = new AuthToken();
-    const token = tokenCreate.gerarToken(headerJWT);
+    const token = await tokenCreate.gerarToken(headerJWT);
     return { token };
+  }
+
+  public static async validate(token: string) {
+    const auth = new AuthToken();
+    const isValidAuth = await auth.autenticateToken(token);
+
+    return isValidAuth;
   }
 }
