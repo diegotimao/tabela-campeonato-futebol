@@ -9,4 +9,12 @@ export default class TeamService {
 
     return teamsAll;
   }
+
+  public static async getOne(id: number) {
+    const oneTeam = await Teams.findOne({
+      where: { id },
+    });
+
+    return oneTeam;
+  }
 }
