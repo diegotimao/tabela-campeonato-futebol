@@ -1,4 +1,5 @@
 import * as express from 'express';
+import TeamsController from './controller/teamsController';
 import UserController from './controller/userController';
 import errorMiddleware from './middleware/error.middleware';
 
@@ -25,6 +26,7 @@ class App {
 
     this.app.post('/login', (req, res, next) => UserController.login(req, res, next));
     this.app.get('/login/validate', (req, res, next) => UserController.validate(req, res, next));
+    this.app.get('/teams', (req, res, next) => TeamsController.getAll(req, res, next));
 
     this.app.use(errorMiddleware);
   }
