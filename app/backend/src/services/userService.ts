@@ -6,10 +6,12 @@ import User from '../database/models/user';
 import IHeader from '../dto/headerDto';
 
 export default class UserService {
-  public static async autentication(loginDTO: LoginDTO) {
+  constructor(private userModel: typeof User, private auth: AuthToken) {}
+
+  async autentication(loginDTO: LoginDTO) {
     if (!loginDTO.email || !loginDTO.password) throw new Exeption(400, 'All fields must be filled');
 
-    const user = await User.findOne({
+    const user = await this.userModel.findOne({
       where: { email: loginDTO.email },
     });
 
@@ -32,9 +34,8 @@ export default class UserService {
     return { token };
   }
 
-  public static async validate(token: string) {
-    const auth = new AuthToken();
-    const isValidAuth = await auth.autenticateToken(token);
+  async validate(token: string) {
+    const isValidAuth = await this.auth.autenticateToken(token);
 
     return isValidAuth;
   }
