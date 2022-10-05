@@ -1,7 +1,12 @@
 import * as express from 'express';
 import TeamsController from './controller/teamsController';
+import UserService from './services/userService';
 import UserController from './controller/userController';
+import User from './database/models/user';
 import errorMiddleware from './middleware/error.middleware';
+import AuthToken from './utils/authToken';
+import TeamService from './services/teamServices';
+import Teams from './database/models/teams';
 
 class App {
   public app: express.Express;
@@ -24,9 +29,14 @@ class App {
     this.app.use(express.json());
     this.app.use(accessControl);
 
-    this.app.post('/login', (req, res, next) => UserController.login(req, res, next));
-    this.app.get('/login/validate', (req, res, next) => UserController.validate(req, res, next));
-    this.app.get('/teams', (req, res, next) => TeamsController.getAll(req, res, next));
+    const auth = new AuthToken();
+    const userController = new UserController(new UserService(User, auth));
+    const teamsService = new TeamsController(new TeamService(Teams));
+
+    this.app.post('/login', (req, res, next) => userController.login(req, res, next));
+    this.app.get('/login/validate', (req, res, next) => userController.validate(req, res, next));
+    this.app.get('/teams', (req, res, next) => teamsService.getAll(req, res, next));
+    this.app.get('/teams/:id', (req, res, next) => teamsService.getOne(req, res, next));
 
     this.app.use(errorMiddleware);
   }
