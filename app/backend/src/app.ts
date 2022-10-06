@@ -7,6 +7,9 @@ import errorMiddleware from './middleware/error.middleware';
 import AuthToken from './utils/authToken';
 import TeamService from './services/teamServices';
 import Teams from './database/models/teams';
+import MatchesController from './controller/matchesController';
+import MatchesServices from './services/matcheServices';
+import Matches from './database/models/matches';
 
 class App {
   public app: express.Express;
@@ -31,12 +34,15 @@ class App {
 
     const auth = new AuthToken();
     const userController = new UserController(new UserService(User, auth));
-    const teamsService = new TeamsController(new TeamService(Teams));
+    const teamsController = new TeamsController(new TeamService(Teams));
+    const matchesController = new MatchesController(new MatchesServices(Matches));
 
     this.app.post('/login', (req, res, next) => userController.login(req, res, next));
     this.app.get('/login/validate', (req, res, next) => userController.validate(req, res, next));
-    this.app.get('/teams', (req, res, next) => teamsService.getAll(req, res, next));
-    this.app.get('/teams/:id', (req, res, next) => teamsService.getOne(req, res, next));
+    this.app.get('/teams', (req, res, next) => teamsController.getAll(req, res, next));
+    this.app.get('/teams/:id', (req, res, next) => teamsController.getOne(req, res, next));
+
+    this.app.get('/matches', (req, res, next) => matchesController.getMatches(req, res, next));
 
     this.app.use(errorMiddleware);
   }
