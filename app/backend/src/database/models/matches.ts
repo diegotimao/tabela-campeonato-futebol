@@ -6,7 +6,7 @@ class Matches extends Model {
   homeTeam: number;
   homeTeamGols: number;
   awayTeam: number;
-  awayGoals: number;
+  awayTeamGoals: number;
   inProgress: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -21,22 +21,35 @@ Matches.init({
   homeTeam: {
     allowNull: false,
     type: INTEGER,
+    field: 'home_team',
+    references: {
+      model: 'teams',
+      key: 'id',
+    },
   },
   homeTeamGols: {
     allowNull: false,
     type: INTEGER,
+    field: 'home_team_goals',
   },
   awayTeam: {
     allowNull: false,
     type: INTEGER,
+    field: 'away_team',
+    references: {
+      model: 'teams',
+      key: 'id',
+    },
   },
-  awayGoals: {
+  awayTeamGoals: {
     allowNull: false,
     type: INTEGER,
+    field: 'away_team_goals',
   },
   inProgress: {
     allowNull: false,
     type: BOOLEAN,
+    field: 'in_progress',
   },
 }, {
   underscored: true,
