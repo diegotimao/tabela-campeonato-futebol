@@ -16,4 +16,16 @@ export default class MatchesServices {
     if (response.length <= 0) throw new Exeption(400, 'Notfound');
     return response;
   }
+
+  async getMatchesProgress(params: boolean) {
+    const response = await this.matchesModel.findAll({
+      where: { inProgress: params },
+      include: [
+        { model: Teams, as: 'teamHome', attributes: ['teamName'] },
+        { model: Teams, as: 'teamAway', attributes: ['teamName'] },
+      ],
+    });
+
+    return response;
+  }
 }
