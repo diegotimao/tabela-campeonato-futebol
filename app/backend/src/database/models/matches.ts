@@ -27,7 +27,7 @@ Matches.init({
       key: 'id',
     },
   },
-  homeTeamGols: {
+  homeTeamGoals: {
     allowNull: false,
     type: INTEGER,
     field: 'home_team_goals',
