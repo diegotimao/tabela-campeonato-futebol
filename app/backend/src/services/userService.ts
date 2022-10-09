@@ -25,7 +25,7 @@ export default class UserService {
       password: user.getDataValue('password'),
     };
 
-    const isHasch = compareSync(loginDTO.password, headerJWT.password);
+    const isHasch = compareSync(loginDTO.password, user.password);
 
     if (!isHasch) throw new Exeption(401, 'Incorrect email or password');
 
