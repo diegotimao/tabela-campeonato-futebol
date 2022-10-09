@@ -36,14 +36,12 @@ class App {
     const userController = new UserController(new UserService(User, auth));
     const teamsController = new TeamsController(new TeamService(Teams));
     const matchesController = new MatchesController(new MatchesServices(Matches));
-
     this.app.post('/login', (req, res, next) => userController.login(req, res, next));
     this.app.get('/login/validate', (req, res, next) => userController.validate(req, res, next));
     this.app.get('/teams', (req, res, next) => teamsController.getAll(req, res, next));
     this.app.get('/teams/:id', (req, res, next) => teamsController.getOne(req, res, next));
-
     this.app.get('/matches', (req, res, next) => matchesController.getMatches(req, res, next));
-
+    // this.app.post('/matches', (req, res, next) => matchesController.createMatches(req, res, next));
     this.app.use(errorMiddleware);
   }
 
