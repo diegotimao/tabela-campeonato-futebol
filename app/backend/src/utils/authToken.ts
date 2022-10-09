@@ -1,5 +1,6 @@
 import * as Jwt from 'jsonwebtoken';
 import { SignOptions } from 'jsonwebtoken';
+// import User from '../database/models/user';
 import IHeader from '../dto/headerDto';
 import Exeption from './exeption';
 
@@ -26,7 +27,6 @@ export default class AuthToken {
       const autorization: Jwt.JwtPayload = Jwt.verify(
         token,
         SECRET,
-
         this.jwtConfig,
       ) as Jwt.JwtPayload;
       return autorization.role;
