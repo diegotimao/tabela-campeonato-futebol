@@ -1,7 +1,7 @@
 import { Request, Response, NextFunction } from 'express';
-// import Exeption from '../utils/exeption';
+import Exeption from '../utils/exeption';
 import MatchesServices from '../services/matcheServices';
-// import AuthToken from '../utils/authToken';
+import AuthToken from '../utils/authToken';
 
 export default class MatchesController {
   constructor(private matheServices: MatchesServices) {}
@@ -20,16 +20,20 @@ export default class MatchesController {
     }
   }
 
-  // async createMatches(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const token = req.header('authorization');
-  //     if (!token) throw new Exeption(400, 'token notgound');
-  //     const auth = new AuthToken();
+  async createMatches(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.header('authorization');
+      if (!token) throw new Exeption(401, 'Token must be a valid token');
+      const auth = new AuthToken();
 
-  //     const isAutorized = await auth.autenticateToken(token);
-  //     if (isAutorized) res.status(200).json(req.body);
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+      const isAutorized = await auth.autenticateToken(token);
+      if (isAutorized) {
+        const response = await this.matheServices.createMatches(req.body);
+
+        return res.status(201).json(response);
+      }
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
