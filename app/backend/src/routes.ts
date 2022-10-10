@@ -25,6 +25,6 @@ routes.post('/matches', (req, res, next) => matchesController.createMatches(req,
 routes.get('/matches', (req, res, next) => matchesController.getMatches(req, res, next));
 routes.patch('/matches/:id/finish', (req, res, next) =>
   matchesController.updatedMatches(req, res, next));
-// routes.patch('/matches/:id', (req, res, next) =>
-//   matchesController.updatedMatchesGoals(req, res, next));
+routes.patch('/matches/:id', (req, res, next) =>
+  matchesController.updatedMatchesGoals(req, res, next));
 export default routes;
