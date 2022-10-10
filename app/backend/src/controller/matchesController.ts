@@ -23,7 +23,7 @@ export default class MatchesController {
   async createMatches(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.header('authorization');
-      if (!token) throw new Exeption(401, 'Token valid');
+      if (!token) throw new Exeption(401, 'Token invalid');
       const auth = new AuthToken();
 
       const isAutorized = await auth.autenticateToken(token);
@@ -32,7 +32,7 @@ export default class MatchesController {
 
         return res.status(201).json(response);
       }
-      throw new Exeption(401, 'Token must be a valid token');
+      throw new Exeption(401, 'Token invalid');
     } catch (error) {
       return next(error);
     }
@@ -57,19 +57,21 @@ export default class MatchesController {
     }
   }
 
-  // async updatedMatchesGoals(req: Request, res: Response, next: NextFunction) {
-  //   try {
-  //     const token = req.header('authorization');
-  //     if (!token) throw new Exeption(401, 'Token must be a valid token');
-  //     const auth = new AuthToken();
-  //     const isAutorized = await auth.autenticateToken(token);
+  async updatedMatchesGoals(req: Request, res: Response, next: NextFunction) {
+    try {
+      const token = req.header('authorization');
+      if (!token) throw new Exeption(401, 'Token must be a valid token');
+      const auth = new AuthToken();
+      const isAutorized = await auth.autenticateToken(token);
 
-  //     if (isAutorized) {
-  //       const goals = req.body;
-  //       return res.status(200).json(goals);
-  //     }
-  //   } catch (error) {
-  //     return next(error);
-  //   }
-  // }
+      if (isAutorized) {
+        const goalsTemas = req.body;
+        const { id } = req.params;
+        const response = await this.matheServices.updatedGoals(goalsTemas, Number(id));
+        return res.status(200).json(response);
+      }
+    } catch (error) {
+      return next(error);
+    }
+  }
 }
