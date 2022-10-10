@@ -45,4 +45,13 @@ export default class MatchesServices {
     const response = await this.matchesModel.create(params);
     return response;
   }
+
+  async updatedMatches(id: number) {
+    const insertId = await this.matchesModel.update(
+      { inProgress: false },
+      { where: { id } },
+    );
+
+    return insertId;
+  }
 }
