@@ -42,12 +42,12 @@ export default class MatchesController {
       const token = req.header('authorization');
       if (!token) throw new Exeption(401, 'Token must be a valid token');
       const auth = new AuthToken();
-
       const isAutorized = await auth.autenticateToken(token);
+
       if (isAutorized) {
         const { id } = req.params;
-
-        return res.status(201).json(id);
+        await this.matheServices.updatedMatches(Number(id));
+        return res.status(200).json({ message: 'Finished' });
       }
     } catch (error) {
       return next(error);
