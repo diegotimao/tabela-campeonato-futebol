@@ -31,7 +31,7 @@ export default class AuthToken {
       ) as Jwt.JwtPayload;
       return autorization.role;
     } catch (error) {
-      throw new Exeption(400, 'Token invalid');
+      throw new Exeption(401, 'Token must be a valid token');
     }
   }
 }

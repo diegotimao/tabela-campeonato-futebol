@@ -23,7 +23,7 @@ export default class MatchesController {
   async createMatches(req: Request, res: Response, next: NextFunction) {
     try {
       const token = req.header('authorization');
-      if (!token) throw new Exeption(401, 'Token must be a valid token');
+      if (!token) throw new Exeption(401, 'Token valid');
       const auth = new AuthToken();
 
       const isAutorized = await auth.autenticateToken(token);
@@ -32,6 +32,7 @@ export default class MatchesController {
 
         return res.status(201).json(response);
       }
+      throw new Exeption(401, 'Token must be a valid token');
     } catch (error) {
       return next(error);
     }
