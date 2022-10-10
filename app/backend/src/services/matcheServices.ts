@@ -31,18 +31,18 @@ export default class MatchesServices {
   }
 
   async createMatches(params: IMatchesCreateDTO) {
-    if (params.awayTeam !== params.homeTeam) {
-      const existAwayTeam = await this.matchesModel.findByPk(params.awayTeam);
-      const existHomeTeam = await this.matchesModel.findByPk(params.homeTeam);
-
-      if (!existAwayTeam || !existHomeTeam) {
-        throw new Exeption(404, 'There is no team with such id!');
-      }
-
-      const response = await this.matchesModel.create(params);
-      return response;
+    if (params.awayTeam === params.homeTeam) {
+      throw new Exeption(401, 'It is not possible to create a match with two equal teams');
     }
 
-    throw new Exeption(401, 'It is not possible to create a match with two equal teams');
+    const existAwayTeam = await this.matchesModel.findByPk(params.awayTeam);
+    const existHomeTeam = await this.matchesModel.findByPk(params.homeTeam);
+
+    if (!existAwayTeam || !existHomeTeam) {
+      throw new Exeption(404, 'There is no team with such id!');
+    }
+
+    const response = await this.matchesModel.create(params);
+    return response;
   }
 }
