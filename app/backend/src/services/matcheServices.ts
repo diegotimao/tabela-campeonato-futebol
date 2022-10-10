@@ -2,7 +2,7 @@ import IMatchesCreateDTO from '../dto/matchesDTO';
 import Teams from '../database/models/teams';
 import Exeption from '../utils/exeption';
 import Matches from '../database/models/matches';
-// import IMatchesGoals from '../dto/updatedGoalsDTO';
+import IMatchesGoals from '../dto/updatedGoalsDTO';
 
 export default class MatchesServices {
   constructor(private matchesModel: typeof Matches) {}
@@ -56,11 +56,16 @@ export default class MatchesServices {
     return insertId;
   }
 
-  // async updatedGoals(params: IMatchesGoals) {
-  //   const insertId = await this.matchesModel.update(
-  //     { homeTeamGoals: params.homeTeamGoals },
-  //     { awayTeamGoals: params.awayTeamGoals },
-  //     { where: { id } },
-  //   );
-  // }
+  async updatedGoals(params: IMatchesGoals, id: number) {
+    const [insertId] = await this.matchesModel.update(
+      {
+        homeTeamGoals: params.homeTeamGoals,
+        awayTeamGoals: params.awayTeamGoals,
+      },
+      { where: { id } },
+    );
+
+    if (insertId === 0) throw new Exeption(400, 'Matches does not exist.');
+    return insertId;
+  }
 }
