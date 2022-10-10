@@ -23,7 +23,8 @@ routes.get('/teams', (req, res, next) => teamsController.getAll(req, res, next))
 routes.get('/teams/:id', (req, res, next) => teamsController.getOne(req, res, next));
 routes.post('/matches', (req, res, next) => matchesController.createMatches(req, res, next));
 routes.get('/matches', (req, res, next) => matchesController.getMatches(req, res, next));
-routes.post('/matches/:id/finish', (req, res, next) =>
+routes.patch('/matches/:id/finish', (req, res, next) =>
   matchesController.updatedMatches(req, res, next));
-
+// routes.patch('/matches/:id', (req, res, next) =>
+//   matchesController.updatedMatchesGoals(req, res, next));
 export default routes;

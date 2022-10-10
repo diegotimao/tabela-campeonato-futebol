@@ -2,6 +2,7 @@ import IMatchesCreateDTO from '../dto/matchesDTO';
 import Teams from '../database/models/teams';
 import Exeption from '../utils/exeption';
 import Matches from '../database/models/matches';
+// import IMatchesGoals from '../dto/updatedGoalsDTO';
 
 export default class MatchesServices {
   constructor(private matchesModel: typeof Matches) {}
@@ -54,4 +55,12 @@ export default class MatchesServices {
 
     return insertId;
   }
+
+  // async updatedGoals(params: IMatchesGoals) {
+  //   const insertId = await this.matchesModel.update(
+  //     { homeTeamGoals: params.homeTeamGoals },
+  //     { awayTeamGoals: params.awayTeamGoals },
+  //     { where: { id } },
+  //   );
+  // }
 }
