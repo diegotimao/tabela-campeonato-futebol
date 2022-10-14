@@ -4,7 +4,7 @@ import Matches from './matches';
 
 class Teams extends Model {
   id?: number;
-  teamName: number;
+  teamName: string;
   teamHome: Matches[];
 }
 
