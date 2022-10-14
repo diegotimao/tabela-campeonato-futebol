@@ -5,7 +5,7 @@ import Matches from '../database/models/matches';
 import IMatchesGoals from '../dto/updatedGoalsDTO';
 
 export default class MatchesServices {
-  constructor(private matchesModel: typeof Matches) {}
+  constructor(private matchesModel: typeof Matches, private teamsModel: typeof Teams) {}
 
   async getMatches(): Promise<Matches[]> {
     const response = await this.matchesModel.findAll({
@@ -67,5 +67,50 @@ export default class MatchesServices {
 
     if (insertId === 0) throw new Exeption(400, 'Matches does not exist.');
     return insertId;
+  }
+
+  async getMatchesHome() {
+    const response = await this.teamsModel.findAll({
+      include: [
+        { model: Matches, as: 'teamHome', where: { inProgress: false } },
+      ],
+    });
+    return MatchesServices.matchesTable(response as unknown as Teams[]);
+    // return response;
+  }
+
+  private static matchesTable(teams: Teams[]) {
+    const result = teams.map((team) => {
+      const matches = team.teamHome;
+      const resultTeam = MatchesServices.calculatorTable(matches);
+      return resultTeam;
+    });
+    return result;
+  }
+
+  public static calculatorTable(matches: Matches[]) {
+    const table = {
+      totalPoints: MatchesServices.calculatorPoints(matches),
+      totalGames: MatchesServices.calculatorTotalGames(matches),
+      totalVictories: MatchesServices.calculatorTotalVictories(matches),
+      totalDraws,
+      totalLosses,
+      goalsFavor,
+      goalsOwn,
+      goalsBalance: goalsFavor - goalsOwn,
+      efficiency: totalPoints / (2 * 3) * 100,
+    };
+    return table;
+  }
+
+  public static calculatorTotalGames(matches: Matches[]) {
+    const totalGames = matches.length;
+    return totalGames;
+  }
+
+  public static calculatorTotalVictories(matches: Matches[]) {
+    const totalVictories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
+    const total = totalVictories.length;
+    return total;
   }
 }
