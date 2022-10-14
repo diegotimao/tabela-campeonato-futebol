@@ -32,4 +32,6 @@ routes.patch('/matches/:id', (req, res, next) =>
   matchesController.updatedMatchesGoals(req, res, next));
 routes.get('/leaderboard/home', (req, res, next) =>
   leadBoardController.getLeadBoardHome(req, res, next));
+routes.get('/leaderboard/away', (req, res, next) =>
+  leadBoardController.getLeadBoardAway(req, res, next));
 export default routes;
