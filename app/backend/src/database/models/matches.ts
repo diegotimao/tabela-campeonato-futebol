@@ -4,7 +4,7 @@ import db from '.';
 class Matches extends Model {
   id?: number;
   homeTeam: number;
-  homeTeamGols: number;
+  homeTeamGoals: number;
   awayTeam: number;
   awayTeamGoals: number;
   inProgress: boolean;
