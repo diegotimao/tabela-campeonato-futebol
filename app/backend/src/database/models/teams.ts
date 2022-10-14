@@ -5,6 +5,7 @@ import Matches from './matches';
 class Teams extends Model {
   id?: number;
   teamName: number;
+  teamHome: Matches[];
 }
 
 Teams.init({
@@ -25,9 +26,9 @@ Teams.init({
 });
 
 Matches.belongsTo(Teams, { foreignKey: 'homeTeam', as: 'teamHome' });
-Matches.belongsTo(Teams, { foreignKey: 'awayTeam', as: 'teamAway' });
+Matches.belongsTo(Teams, { foreignKey: 'awayTeam', as: 'teamAway' }); // muitos
 
-// Teams.hasMany( Matches, { foreignKey: 'home_team', as: 'teamHome' });
-// Teams.hasMany( Matches, { foreignKey: 'home_team', as: 'teamHome' });
+Teams.hasMany(Matches, { foreignKey: 'homeTeam', as: 'teamHome' }); // pra um
+Teams.hasMany(Matches, { foreignKey: 'awayTeam', as: 'teamAway' });
 
 export default Teams;
