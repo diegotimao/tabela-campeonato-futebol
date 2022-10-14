@@ -149,7 +149,7 @@ export default class LeadBoardServices {
   }
 
   public static calculatorLossesAway(matches: Matches[]) {
-    const losses = matches.filter((match) => match.awayTeamGoals > match.homeTeamGoals);
+    const losses = matches.filter((match) => match.awayTeamGoals < match.homeTeamGoals);
     const totalLosses = losses.length;
     return totalLosses;
   }
