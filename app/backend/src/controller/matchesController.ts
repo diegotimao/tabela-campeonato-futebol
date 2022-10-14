@@ -74,13 +74,4 @@ export default class MatchesController {
       return next(error);
     }
   }
-
-  async getMatchesHome(req: Request, res: Response, next: NextFunction) {
-    try {
-      const response = await this.matheServices.getMatchesHome();
-      return res.status(200).json(response);
-    } catch (error) {
-      return next(error);
-    }
-  }
 }
