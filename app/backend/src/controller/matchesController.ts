@@ -78,7 +78,7 @@ export default class MatchesController {
   async getMatchesHome(req: Request, res: Response, next: NextFunction) {
     try {
       const response = await this.matheServices.getMatchesHome();
-      return res.status(201).json(response);
+      return res.status(200).json(response);
     } catch (error) {
       return next(error);
     }
