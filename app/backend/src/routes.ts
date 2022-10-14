@@ -9,11 +9,14 @@ import Teams from './database/models/teams';
 import MatchesController from './controller/matchesController';
 import MatchesServices from './services/matcheServices';
 import Matches from './database/models/matches';
+import LeadBoardController from './controller/leadBoardController';
+import LeadBoardServices from './services/leadBoardServices';
 
 const auth = new AuthToken();
 const userController = new UserController(new UserService(User, auth));
 const teamsController = new TeamsController(new TeamService(Teams));
-const matchesController = new MatchesController(new MatchesServices(Matches, Teams));
+const matchesController = new MatchesController(new MatchesServices(Matches));
+const leadBoardController = new LeadBoardController(new LeadBoardServices(Teams));
 
 const routes = express.Router();
 
@@ -28,5 +31,5 @@ routes.patch('/matches/:id/finish', (req, res, next) =>
 routes.patch('/matches/:id', (req, res, next) =>
   matchesController.updatedMatchesGoals(req, res, next));
 routes.get('/leaderboard/home', (req, res, next) =>
-  matchesController.getMatchesHome(req, res, next));
+  leadBoardController.getLeadBoardHome(req, res, next));
 export default routes;
