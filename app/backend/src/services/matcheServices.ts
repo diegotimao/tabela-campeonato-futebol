@@ -76,29 +76,35 @@ export default class MatchesServices {
       ],
     });
     return MatchesServices.matchesTable(response as unknown as Teams[]);
-    // return response;
   }
 
   private static matchesTable(teams: Teams[]) {
-    const result = teams.map((team) => {
+    const table = teams.map((team) => {
+      const name = team.teamName;
       const matches = team.teamHome;
-      const resultTeam = MatchesServices.calculatorTable(matches);
+      const resultTeam = MatchesServices.calculatorTable(name, matches);
       return resultTeam;
     });
-    return result;
+
+    const tabelClassific = table.sort((a, b) => {
+
+    });
+
+    return table;
   }
 
-  public static calculatorTable(matches: Matches[]) {
+  public static calculatorTable(nameTeam: number, matches: Matches[]) {
     const table = {
+      name: nameTeam,
       totalPoints: MatchesServices.calculatorPoints(matches),
       totalGames: MatchesServices.calculatorTotalGames(matches),
       totalVictories: MatchesServices.calculatorTotalVictories(matches),
-      totalDraws,
-      totalLosses,
-      goalsFavor,
-      goalsOwn,
-      goalsBalance: goalsFavor - goalsOwn,
-      efficiency: totalPoints / (2 * 3) * 100,
+      totalDraws: MatchesServices.calculatorDraws(matches),
+      totalLosses: MatchesServices.calculatorLosses(matches),
+      goalsFavor: MatchesServices.calculatorGoalsHome(matches),
+      goalsOwn: MatchesServices.calculatorGoalsOwn(matches),
+      goalsBalance: MatchesServices.calculatorGoalsBalance(matches),
+      efficiency: MatchesServices.calculatorEffieciency(matches),
     };
     return table;
   }
@@ -112,5 +118,55 @@ export default class MatchesServices {
     const totalVictories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
     const total = totalVictories.length;
     return total;
+  }
+
+  public static calculatorPoints(matches: Matches[]) {
+    const victories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
+    const totalVictories = victories.length;
+    const draws = matches.filter((match) => match.homeTeamGoals === match.awayTeamGoals);
+    const totalDraws = draws.length;
+    const totalPoints = totalVictories * 3 + totalDraws;
+    return totalPoints;
+  }
+
+  public static calculatorDraws(matches: Matches[]) {
+    const draws = matches.filter((match) => match.homeTeamGoals === match.awayTeamGoals);
+    const totalDraws = draws.length;
+    return totalDraws;
+  }
+
+  public static calculatorLosses(matches: Matches[]) {
+    const losses = matches.filter((match) => match.homeTeamGoals < match.awayTeamGoals);
+    const totalLosses = losses.length;
+    return totalLosses;
+  }
+
+  public static calculatorGoalsHome(matches: Matches[]) {
+    const goals = matches.map((match) => match.homeTeamGoals);
+    const totalGoals = goals.reduce((prev, curr) => prev + curr);
+    return totalGoals;
+  }
+
+  public static calculatorGoalsOwn(matches: Matches[]) {
+    const goals = matches.map((match) => match.awayTeamGoals);
+    const totalGoals = goals.reduce((curr, prev) => curr + prev);
+    return totalGoals;
+  }
+
+  public static calculatorGoalsBalance(matches: Matches[]) {
+    const goalsHome = matches.map((match) => match.homeTeamGoals);
+    const totalGoalsHome = goalsHome.reduce((prev, curr) => prev + curr);
+    const goalsOwn = matches.map((match) => match.awayTeamGoals);
+    const totalGoalsOwn = goalsOwn.reduce((curr, prev) => curr + prev);
+    return totalGoalsHome - totalGoalsOwn;
+  }
+
+  public static calculatorEffieciency(matches: Matches[]) {
+    const totalGames = matches.length;
+    const victories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
+    const losses = matches.filter((match) => match.homeTeamGoals === match.awayTeamGoals);
+    const totaLosses = losses.length;
+    const totalVictories = victories.length;
+    return Number((((totalVictories * 3 + totaLosses) / (totalGames * 3)) * 100).toFixed(2));
   }
 }
