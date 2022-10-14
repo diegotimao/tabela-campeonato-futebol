@@ -4,6 +4,18 @@ import Exeption from '../utils/exeption';
 import Matches from '../database/models/matches';
 import IMatchesGoals from '../dto/updatedGoalsDTO';
 
+interface Table {
+  name: string;
+  totalPoints: number;
+  totalGames: number;
+  totalVictories: number;
+  totalDraws: number;
+  totalLosses: number;
+  goalsFavor: number;
+  goalsOwn: number;
+  goalsBalance: number;
+  efficiency: number;
+}
 export default class MatchesServices {
   constructor(private matchesModel: typeof Matches, private teamsModel: typeof Teams) {}
 
@@ -86,14 +98,25 @@ export default class MatchesServices {
       return resultTeam;
     });
 
-    const tabelClassific = table.sort((a, b) => {
-
-    });
-
-    return table;
+    return MatchesServices.matcheTableCassific(table);
   }
 
-  public static calculatorTable(nameTeam: number, matches: Matches[]) {
+  public static matcheTableCassific(table: Table[]) {
+    const tableSort = table.sort((a, b) => {
+      if (a.totalPoints < b.totalPoints) return 1;
+      if (a.totalPoints > b.totalPoints) return -1;
+      if (a.totalVictories < b.totalVictories) return 1;
+      if (a.totalVictories > b.totalVictories) return -1;
+      if (a.goalsBalance < b.goalsBalance) return 1;
+      if (a.goalsBalance > b.goalsBalance) return -1;
+      if (a.goalsFavor < b.goalsFavor) return 1;
+      if (a.goalsFavor > b.goalsFavor) return -1;
+      return 0;
+    });
+    return tableSort;
+  }
+
+  public static calculatorTable(nameTeam: string, matches: Matches[]) {
     const table = {
       name: nameTeam,
       totalPoints: MatchesServices.calculatorPoints(matches),
