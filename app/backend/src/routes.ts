@@ -13,7 +13,7 @@ import Matches from './database/models/matches';
 const auth = new AuthToken();
 const userController = new UserController(new UserService(User, auth));
 const teamsController = new TeamsController(new TeamService(Teams));
-const matchesController = new MatchesController(new MatchesServices(Matches));
+const matchesController = new MatchesController(new MatchesServices(Matches, Teams));
 
 const routes = express.Router();
 
@@ -27,4 +27,6 @@ routes.patch('/matches/:id/finish', (req, res, next) =>
   matchesController.updatedMatches(req, res, next));
 routes.patch('/matches/:id', (req, res, next) =>
   matchesController.updatedMatchesGoals(req, res, next));
+routes.get('/leaderboard/home', (req, res, next) =>
+  matchesController.getMatchesHome(req, res, next));
 export default routes;
