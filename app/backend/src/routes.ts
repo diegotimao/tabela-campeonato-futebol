@@ -9,14 +9,17 @@ import Teams from './database/models/teams';
 import MatchesController from './controller/matchesController';
 import MatchesServices from './services/matcheServices';
 import Matches from './database/models/matches';
-import LeadBoardController from './controller/leadBoardController';
-import LeadBoardServices from './services/leadBoardServices';
+import LeadBoardHomeController from './controller/leadBoardHomeController';
+import LeadBoardHomeServices from './services/leadBoardServices';
+import LeadBoardAwayController from './controller/leadBoardAwayController';
+import LeadBoarAwayService from './services/leadBoardHome';
 
 const auth = new AuthToken();
 const userController = new UserController(new UserService(User, auth));
 const teamsController = new TeamsController(new TeamService(Teams));
 const matchesController = new MatchesController(new MatchesServices(Matches));
-const leadBoardController = new LeadBoardController(new LeadBoardServices(Teams));
+const leadBoardHomeController = new LeadBoardHomeController(new LeadBoardHomeServices(Teams));
+const leadBoardAwayController = new LeadBoardAwayController(new LeadBoarAwayService(Teams));
 
 const routes = express.Router();
 
@@ -30,8 +33,10 @@ routes.patch('/matches/:id/finish', (req, res, next) =>
   matchesController.updatedMatches(req, res, next));
 routes.patch('/matches/:id', (req, res, next) =>
   matchesController.updatedMatchesGoals(req, res, next));
+
 routes.get('/leaderboard/home', (req, res, next) =>
-  leadBoardController.getLeadBoardHome(req, res, next));
+  leadBoardHomeController.getLeadBoardHome(req, res, next));
+
 routes.get('/leaderboard/away', (req, res, next) =>
-  leadBoardController.getLeadBoardAway(req, res, next));
+  leadBoardAwayController.getLeadBoardAway(req, res, next));
 export default routes;
