@@ -86,8 +86,8 @@ export default class LeadBoardServices {
       totalVictories: LeadBoardServices.calculatorTotalVictoriesAway(matches),
       totalDraws: LeadBoardServices.calculatorDraws(matches),
       totalLosses: LeadBoardServices.calculatorLossesAway(matches),
-      goalsFavor: LeadBoardServices.calculatorGoalsHome(matches),
-      goalsOwn: LeadBoardServices.calculatorGoalsOwn(matches),
+      goalsFavor: LeadBoardServices.calculatorGoalsOwn(matches),
+      goalsOwn: LeadBoardServices.calculatorGoalsHome(matches),
       goalsBalance: LeadBoardServices.calculatorGoalsBalanceAway(matches),
       efficiency: LeadBoardServices.calculatorEffieciencyAway(matches),
     };
