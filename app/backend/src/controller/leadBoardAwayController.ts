@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import LeadBoarAwayService from '../services/leadBoardHome';
+import LeadBoarAwayService from '../services/leadBoardHomeService';
 
 export default class LeadBoardAwayController {
   constructor(private leadBoardAwayServices: LeadBoarAwayService) {}
