@@ -13,6 +13,8 @@ import LeadBoardHomeController from './controller/leadBoardHomeController';
 import LeadBoardHomeServices from './services/leadBoardHomeServices';
 import LeadBoardAwayController from './controller/leadBoardAwayController';
 import LeadBoarAwayService from './services/leadBoardAwayService';
+import LeadBoradController from './controller/leadBoardController';
+import LeadBoardServices from './services/leadBoardServices';
 
 const auth = new AuthToken();
 const userController = new UserController(new UserService(User, auth));
@@ -20,6 +22,7 @@ const teamsController = new TeamsController(new TeamService(Teams));
 const matchesController = new MatchesController(new MatchesServices(Matches));
 const leadBoardHomeController = new LeadBoardHomeController(new LeadBoardHomeServices(Teams));
 const leadBoardAwayController = new LeadBoardAwayController(new LeadBoarAwayService(Teams));
+const leadBoardController = new LeadBoradController(new LeadBoardServices(Teams));
 
 const routes = express.Router();
 
@@ -39,4 +42,8 @@ routes.get('/leaderboard/home', (req, res, next) =>
 
 routes.get('/leaderboard/away', (req, res, next) =>
   leadBoardAwayController.getLeadBoardAway(req, res, next));
+
+routes.get('/leaderboard', (req, res, next) =>
+  leadBoardController.getLeadBoard(req, res, next));
+
 export default routes;
