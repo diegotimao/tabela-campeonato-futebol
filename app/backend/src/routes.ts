@@ -10,9 +10,9 @@ import MatchesController from './controller/matchesController';
 import MatchesServices from './services/matcheServices';
 import Matches from './database/models/matches';
 import LeadBoardHomeController from './controller/leadBoardHomeController';
-import LeadBoardHomeServices from './services/leadBoardServices';
+import LeadBoardHomeServices from './services/leadBoardHomeServices';
 import LeadBoardAwayController from './controller/leadBoardAwayController';
-import LeadBoarAwayService from './services/leadBoardHome';
+import LeadBoarAwayService from './services/leadBoardAwayService';
 
 const auth = new AuthToken();
 const userController = new UserController(new UserService(User, auth));
