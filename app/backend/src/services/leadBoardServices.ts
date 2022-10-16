@@ -38,13 +38,14 @@ export default class LeadBoardServices {
       name: nameTeam,
       totalPoints: LeadBoardServices.calculatorPoints(matchesHome, matchesAway),
       totalGames: LeadBoardServices.calculatorGames(matchesHome, matchesAway),
+      totalVictories: LeadBoardServices.calculatorVitories(matchesHome, matchesAway),
     };
     return table;
   }
 
   public static calculatorPoints(matchesHome: Matches[], matchesAway: Matches[]) {
-    const responseHome = LeadBoarAwayService.calculatorPointsAway(matchesAway);
-    const responseAway = LeadBoardHomeServices.calculatorPointsHome(matchesHome);
+    const responseAway = LeadBoarAwayService.calculatorPointsAway(matchesAway);
+    const responseHome = LeadBoardHomeServices.calculatorPointsHome(matchesHome);
     return responseHome + responseAway;
   }
 
@@ -52,5 +53,11 @@ export default class LeadBoardServices {
     const totalDrawsHome = matchesHome.length;
     const totalDrawsAway = matchesAway.length;
     return totalDrawsHome + totalDrawsAway;
+  }
+
+  public static calculatorVitories(matchesHome: Matches[], matchesAway: Matches[]) {
+    const vitoriesHome = LeadBoardHomeServices.calculatorTotalVictoriesHome(matchesHome);
+    const vitoriesAway = LeadBoarAwayService.calculatorTotalVictoriesAway(matchesAway);
+    return vitoriesHome + vitoriesAway;
   }
 }
