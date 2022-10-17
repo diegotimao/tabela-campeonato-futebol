@@ -40,7 +40,6 @@ export default class LeadBoardHomeServices {
     return tableSort;
   }
 
-  // refazer
   public static calculatorTableHome(nameTeam: string, matches: Matches[]) {
     const table = {
       name: nameTeam,
@@ -57,20 +56,17 @@ export default class LeadBoardHomeServices {
     return table;
   }
 
-  // Não refazer
   public static calculatorTotalGames(matches: Matches[]) {
     const totalGames = matches.length;
     return totalGames;
   }
 
-  // home
   public static calculatorTotalVictoriesHome(matches: Matches[]) {
     const totalVictories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
     const total = totalVictories.length;
     return total;
   }
 
-  // home
   public static calculatorPointsHome(matches: Matches[]) {
     const victories = matches.filter((match) => match.homeTeamGoals > match.awayTeamGoals);
     const totalVictories = victories.length;
@@ -86,28 +82,24 @@ export default class LeadBoardHomeServices {
     return totalGoals;
   }
 
-  // não precisa
   public static calculatorDraws(matches: Matches[]) {
     const draws = matches.filter((match) => match.homeTeamGoals === match.awayTeamGoals);
     const totalDraws = draws.length;
     return totalDraws;
   }
 
-  // refazer
   public static calculatorLossesHome(matches: Matches[]) {
     const losses = matches.filter((match) => match.homeTeamGoals < match.awayTeamGoals);
     const totalLosses = losses.length;
     return totalLosses;
   }
 
-  // não refazer
   public static calculatorGoalsHome(matches: Matches[]) {
     const goals = matches.map((match) => match.homeTeamGoals);
     const totalGoals = goals.reduce((prev, curr) => prev + curr);
     return totalGoals;
   }
 
-  // não refazer
   public static calculatorGoalsBalanceHome(matches: Matches[]) {
     const goalsHome = matches.map((match) => match.homeTeamGoals);
     const totalGoalsHome = goalsHome.reduce((prev, curr) => prev + curr);
