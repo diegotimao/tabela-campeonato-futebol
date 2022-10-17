@@ -1,3 +1,4 @@
+import Table from '../dto/tableDTO';
 import Matches from '../database/models/matches';
 import Teams from '../database/models/teams';
 import LeadBoarAwayService from './leadBoardAwayService';
@@ -26,7 +27,22 @@ export default class LeadBoardServices {
       return resultTeam;
     });
 
-    return table;
+    return LeadBoardServices.tableCassific(table);
+  }
+
+  public static tableCassific(table: Table[]) {
+    const tableSort = table.sort((a, b) => {
+      if (a.totalPoints < b.totalPoints) return 1;
+      if (a.totalPoints > b.totalPoints) return -1;
+      if (a.totalVictories < b.totalVictories) return 1;
+      if (a.totalVictories > b.totalVictories) return -1;
+      if (a.goalsBalance < b.goalsBalance) return 1;
+      if (a.goalsBalance > b.goalsBalance) return -1;
+      if (a.goalsFavor < b.goalsFavor) return 1;
+      if (a.goalsFavor > b.goalsFavor) return -1;
+      return 0;
+    });
+    return tableSort;
   }
 
   public static calculatorTableHome(
@@ -41,7 +57,10 @@ export default class LeadBoardServices {
       totalVictories: LeadBoardServices.calculatorVitories(matchesHome, matchesAway),
       totalDraws: LeadBoardServices.totalDraw(matchesHome, matchesAway),
       totalLosses: LeadBoardServices.totalLosses(matchesHome, matchesAway),
-      goalsOwn: LeadBoardServices.totalGoals(matchesHome, matchesAway),
+      goalsFavor: LeadBoardServices.goalsFavor(matchesHome, matchesAway),
+      goalsOwn: LeadBoardServices.totalGoalsOwn(matchesHome, matchesAway),
+      goalsBalance: LeadBoardServices.goalsBalance(matchesHome, matchesAway),
+      efficiency: LeadBoardServices.calculatorEffieciency(matchesHome, matchesAway),
     };
     return table;
   }
@@ -76,9 +95,45 @@ export default class LeadBoardServices {
     return totalLossesHome + totalLossesAway;
   }
 
-  public static totalGoals(matchesHome: Matches[], matchesAway: Matches[]) {
-    const totalGoalsHome = LeadBoardHomeServices.calculatorGoalsHome(matchesHome);
-    const totalGoalsAway = LeadBoarAwayService.calculatorGoalsOwn(matchesAway);
+  public static goalsFavor(matchesHome: Matches[], matchesAway: Matches[]) {
+    const goalsFavorHome = LeadBoardHomeServices.calculatorGoalsHome(matchesHome);
+    const goalsFavorAway = LeadBoarAwayService.calculatorGoalsAway(matchesAway);
+    return goalsFavorHome + goalsFavorAway;
+  }
+
+  public static totalGoalsOwn(matchesHome: Matches[], matchesAway: Matches[]) {
+    const totalGoalsHome = LeadBoardHomeServices.calculatorGoalsOwn(matchesHome);
+    const totalGoalsAway = LeadBoarAwayService.calculatorGoalsHome(matchesAway);
     return totalGoalsHome + totalGoalsAway;
+  }
+
+  public static goalsBalance(matchesHome: Matches[], matchesAway: Matches[]) {
+    const balanceHome = LeadBoardHomeServices.calculatorGoalsBalanceHome(matchesHome);
+    const balanceAway = LeadBoarAwayService.calculatorGoalsBalanceAway(matchesAway);
+    return balanceHome + balanceAway;
+  }
+
+  public static calculatorEffieciency(matchesHome: Matches[], matchesAway: Matches[]) {
+    const totalGames = matchesHome.length + matchesAway.length;
+    const victoriesHome = matchesHome.filter(
+      (match) => match.homeTeamGoals > match.awayTeamGoals,
+    ).length;
+
+    const lossesHome = matchesHome.filter(
+      (match) => match.homeTeamGoals === match.awayTeamGoals,
+    ).length;
+
+    const victoriesAway = matchesAway.filter(
+      (match) => match.homeTeamGoals < match.awayTeamGoals,
+    ).length;
+
+    const lossesAway = matchesAway.filter(
+      (match) => match.homeTeamGoals === match.awayTeamGoals,
+    ).length;
+
+    const totalVitories = (victoriesHome + victoriesAway);
+    const totalLosses = (lossesHome + lossesAway);
+
+    return Number((((totalVitories * 3 + totalLosses) / (totalGames * 3)) * 100).toFixed(2));
   }
 }
