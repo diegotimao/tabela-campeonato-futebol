@@ -34,7 +34,7 @@ export default class LeadBoarAwayService {
       totalVictories: LeadBoarAwayService.calculatorTotalVictoriesAway(matches),
       totalDraws: LeadBoarAwayService.calculatorDraws(matches),
       totalLosses: LeadBoarAwayService.calculatorLossesAway(matches),
-      goalsFavor: LeadBoarAwayService.calculatorGoalsOwn(matches),
+      goalsFavor: LeadBoarAwayService.calculatorGoalsAway(matches),
       goalsOwn: LeadBoarAwayService.calculatorGoalsHome(matches),
       goalsBalance: LeadBoarAwayService.calculatorGoalsBalanceAway(matches),
       efficiency: LeadBoarAwayService.calculatorEffieciencyAway(matches),
@@ -95,7 +95,7 @@ export default class LeadBoarAwayService {
     return totalGoals;
   }
 
-  public static calculatorGoalsOwn(matches: Matches[]) {
+  public static calculatorGoalsAway(matches: Matches[]) {
     const goals = matches.map((match) => match.awayTeamGoals);
     const totalGoals = goals.reduce((curr, prev) => curr + prev);
     return totalGoals;
