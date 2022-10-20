@@ -27,7 +27,7 @@ Neste projeto pude práticar e aprimorar meus conhecimentos em:
 Após clonar o repositório navegue até a sua pasta e instale as dependências do projeto.
 
 ```
-cd tabela-campeonato-brasileiro
+cd tabela-campeonato-futebol
 npm install
 ```
 Execute o aplicativo com o Docker (as configurações de composição foram desenvolvidas pela equipe do Trybe)
