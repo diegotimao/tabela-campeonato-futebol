@@ -18,7 +18,7 @@ Neste projeto pude práticar e aprimorar meus conhecimentos em:
 - **MySQL** para gerenciamento de banco de dados .
 - **Testes de integração** com  **Mocha**, **Chai** para garantir a qualidade do código e testar possíveis interações do usuário.
 - **Arquitetura MSC** arquitetura relacionada a organização do sistema.
-- **OOP com SOLID** programação orientada a objetos ultilizando os principios do SOLID.
+- **POO com SOLID** programação orientada a objetos ultilizando os principios do SOLID.
 ---
 
 
